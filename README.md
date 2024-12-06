@@ -9,7 +9,7 @@ In the latter case, your virtual environment must be located at either a `.venv`
 or the value of the `UV_PROJECT_ENVIRONMENT` environment variable if it is set 
 (the action uses [uv](https://docs.astral.sh/uv) internally).
 
-> [!CAUTION]
+> [!WARNING]
 > [Poetry](https://python-poetry.org) users must either: 
 > - set [`virtualenvs.in-project`](https://python-poetry.org/docs/configuration#virtualenvsin-project) to `true`
 > - set [`virtualenvs.create`](https://python-poetry.org/docs/configuration#virtualenvscreate) to `false`
