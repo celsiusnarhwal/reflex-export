@@ -4,7 +4,7 @@ This GitHub Action exports a [Reflex](https://reflex.dev) project while caching 
 
 ## Usage
 
-Reflex must be availble on your system path or in your project's virtual environment before you run this action.
+Reflex must be available on the system path or in your project's virtual environment before you run this action.
 In the latter case, your virtual environment must be located at either a `.venv` folder in the action's working directory
 or the value of the `UV_PROJECT_ENVIRONMENT` environment variable if it is set 
 (the action uses [uv](https://docs.astral.sh/uv) internally).
