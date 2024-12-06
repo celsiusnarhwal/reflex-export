@@ -22,7 +22,7 @@ or the value of the `UV_PROJECT_ENVIRONMENT` environment variable if it is set
 - name: Checkout Repository
   uses: actions/checkout@v4
   
-# Install Reflex and other dependencies using the tool of your choice, then...
+  # Install Reflex and other dependencies using the tool of your choice, then...
 
 - name: Export Project
   uses: celsiusnarhwal/reflex-export@main
