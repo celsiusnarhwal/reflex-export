@@ -32,7 +32,7 @@ runs:
         path: .web
         key: ${{ runner.os }}-reflex-
 
-    - name: Export Frontend
+    - name: Export Project
       shell: bash
       run: ${{ steps.paths.outputs.bun }} install --cwd ${{ steps.paths.outputs.web }} --frozen-lockfile; uv run reflex export ${{ inputs.args }}
 
