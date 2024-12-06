@@ -1,0 +1,46 @@
+name: Export Reflex Project
+inputs:
+  args:
+    description: Arguments to `reflex export`.
+    required: false
+
+
+runs:
+  using: composite
+  steps:
+    - name: Set Up uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: 0.5.x
+        enable-cache: true
+
+    - name: Initialize Reflex
+      shell: bash
+      run: uv run reflex init
+
+    - name: Get Paths
+      id: paths
+      shell: uv run --with github-action-utils python {0}
+      run: |
+        import github_action_utils as gha
+        from reflex.config import get_config
+        from reflex.utils.prerequisites import get_web_dir
+        
+        gha.set_output("web", get_web_dir())
+        gha.set_output("bun", get_config().bun_path)
+
+    - name: Restore Reflex Cache
+      uses: actions/cache/restore@v4
+      with:
+        path: .web
+        key: ${{ runner.os }}-reflex-
+
+    - name: Export Frontend
+      shell: bash
+      run: ${{ steps.paths.outputs.bun }} install --cwd ${{ steps.paths.outputs.web }} --frozen-lockfile; uv run reflex export ${{ inputs.args }}
+
+    - name: Save Reflex Cache
+      uses: actions/cache/save@v4
+      with:
+        path: .web
+        key: ${{ runner.os }}-reflex-${{ hashFiles('.web/bun.lockb') }}
