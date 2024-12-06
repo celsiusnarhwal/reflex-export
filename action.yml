@@ -40,4 +40,4 @@ runs:
       uses: actions/cache/save@v4
       with:
         path: ${{ steps.paths.outputs.web }}
-        key: ${{ runner.os }}-reflex-${{ hashFiles('${{ steps.paths.outputs.web }}/bun.lockb', '${{ steps.paths.outputs.web }}/package-lock.json') }}
+        key: ${{ runner.os }}-reflex-${{ hashFiles('${{ steps.paths.outputs.web }}/bun.lockb') }}-${{ hashFiles('${{ steps.paths.outputs.web }}/package-lock.json') }}
