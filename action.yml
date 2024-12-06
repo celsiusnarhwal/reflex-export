@@ -39,5 +39,5 @@ runs:
     - name: Save Reflex Cache
       uses: actions/cache/save@v4
       with:
-        path: ${{ steps.paths.outpus.web }}
+        path: ${{ steps.paths.outputs.web }}
         key: ${{ runner.os }}-reflex-${{ hashFiles('${{ steps.paths.outputs.web }}/bun.lockb', '${{ steps.paths.outputs.web }}/package-lock.json') }}
