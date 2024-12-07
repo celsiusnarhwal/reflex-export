@@ -8,7 +8,6 @@ from reflex.utils.prerequisites import get_web_dir
 web = get_web_dir().absolute()
 key_parts = ["reflex-export", platform.system(), platform.machine(), "reflex", importlib.metadata.version("reflex")]
 
-
 for lockfile in ["bun.lockb", "package-lock.json"]:
     fp = web / lockfile
 
