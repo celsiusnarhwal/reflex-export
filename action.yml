@@ -39,7 +39,7 @@ runs:
       run: uv run reflex init
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Get Paths
+    - name: Get Web and Bun Paths
       id: paths
       shell: uv run --with github-action-utils python {0}
       run: |
