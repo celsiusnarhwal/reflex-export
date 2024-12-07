@@ -28,7 +28,7 @@ runs:
         if [ -f rxconfig.py ]; then
           :
         else
-          echo "::error:: It doesn't look like the current directory is the root of your Reflex project. Maybe you should have passed project-root?"
+          echo "::error:: It doesn't look like the current directory is the root of a Reflex project. Maybe you should have passed project-root?"
           exit 1
         fi
 
