@@ -25,9 +25,7 @@ runs:
     - name: Check for rxconfig.py
       shell: bash
       run: | 
-        if [ -f rxconfig.py ]; then
-          :
-        else
+        if [ ! -f rxconfig.py ]; then
           echo "::error:: It doesn't look like the current directory is the root of a Reflex project. Maybe you should've passed project-root?"
           exit 1
         fi
