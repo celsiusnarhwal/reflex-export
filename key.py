@@ -5,7 +5,6 @@ import platform
 import github_action_utils as gha
 from reflex.utils.prerequisites import get_web_dir
 
-
 web = get_web_dir().absolute()
 key_parts = ["reflex-export", platform.system(), platform.machine(), "reflex", importlib.metadata.version("reflex")]
 
