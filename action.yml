@@ -33,38 +33,28 @@ runs:
         gha.set_output("web", get_web_dir().absolute())
         gha.set_output("bun", get_config().bun_path.absolute())
 
+    - name: Get Cache Key I
+      id: key-1
+      shell: bash
+      run: uv run ${{ github.action_path }}/key.py
+
     - name: Restore Reflex Cache
       uses: actions/cache/restore@v4
       with:
         path: ${{ steps.paths.outputs.web }}
-        key: ${{ runner.os }}-reflex-
+        key: ${{ steps.key-1.outputs.key }}
 
     - name: Export Project
       shell: bash
       run: ${{ steps.paths.outputs.bun }} install --cwd ${{ steps.paths.outputs.web }} --frozen-lockfile; uv run reflex export ${{ inputs.args }}
 
-    - name: Get Cache Key Hash
-      id: hash
-      shell: uv run --with github-action-utils python {0}
-      run: |
-        import hashlib
-        
-        import github_action_utils as gha
-        from reflex.utils.prerequisites import get_web_dir
-        
-        hashes = []
-        web = get_web_dir().absolute()
-        
-        for lockfile in ["bun.lockb", "package-lock.json"]:
-            fp = web / lockfile
-            
-            if fp.exists():
-                hashes.append(hashlib.sha256(fp.read_bytes()).hexdigest())
-        
-        gha.set_output("hash", "-".join(hashes))
+    - name: Get Cache Key II
+      id: key-2
+      shell: bash
+      run: uv run ${{ github.action_path }}/key.py
 
     - name: Save Reflex Cache
       uses: actions/cache/save@v4
       with:
         path: ${{ steps.paths.outputs.web }}
-        key: ${{ runner.os }}-reflex-${{ steps.hash.outputs.hash }}
+        key: ${{ steps.key-2.outputs.key }}
