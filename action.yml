@@ -52,16 +52,16 @@ runs:
         import github_action_utils as gha
         from reflex.utils.prerequisites import get_web_dir
         
-        key_hash = ""
+        hashes = []
         web = get_web_dir().absolute()
         
         for lockfile in ["bun.lockb", "package-lock.json"]:
             fp = web / lockfile
             
             if fp.exists():
-                key_hash += str(hashlib.sha256(fp.read_bytes()))
+                hashes.append(hashlib.sha256(fp.read_bytes()).hexdigest())
         
-        gha.set_output("hash", key_hash)
+        gha.set_output("hash", "-".join(hashes))
 
     - name: Save Reflex Cache
       uses: actions/cache/save@v4
