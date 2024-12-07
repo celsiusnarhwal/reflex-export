@@ -9,7 +9,7 @@ runs:
   using: composite
   steps:
     - name: Exit on Windows
-      if: ${{ runner.os == 'Windows' }}
+      if: ${{ runner.os != 'Windows' }}
       shell: bash
       run: |
         echo "::error::This action does not currently support Windows runners."
