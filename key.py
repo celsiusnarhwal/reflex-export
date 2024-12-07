@@ -1,10 +1,3 @@
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "github-actions-utils",
-# ]
-# ///
-
 import hashlib
 import importlib.metadata
 import platform
