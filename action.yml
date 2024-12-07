@@ -59,7 +59,7 @@ runs:
             fp = web / lockfile
             
             if fp.exists():
-                key_hash += hashlib.sha256(fp.read_bytes())
+                key_hash += str(hashlib.sha256(fp.read_bytes()))
         
         gha.set_output("hash", key_hash)
 
