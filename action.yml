@@ -3,6 +3,9 @@ inputs:
   args:
     description: Arguments to `reflex export`.
     required: false
+  project-root:
+    description: The root of your Reflex project, if not the current working directory.
+    default: .
 
 
 runs:
@@ -15,12 +18,17 @@ runs:
         echo "::error::This action does not currently support Windows runners."
         exit 1
 
+    - name: Get Working Directory
+      shell: bash
+      run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
+
     - name: Set Up uv
       uses: astral-sh/setup-uv@v3
 
     - name: Initialize Reflex
       shell: bash
       run: uv run reflex init
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Paths
       id: paths
@@ -32,11 +40,13 @@ runs:
         
         gha.set_output("web", get_web_dir().absolute())
         gha.set_output("bun", get_config().bun_path.absolute())
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key I
       id: key-1
       shell: bash
       run: uv run --with github-action-utils ${{ github.action_path }}/key.py
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Restore Reflex Cache
       uses: actions/cache/restore@v4
@@ -47,11 +57,13 @@ runs:
     - name: Export Project
       shell: bash
       run: ${{ steps.paths.outputs.bun }} install --cwd ${{ steps.paths.outputs.web }} --frozen-lockfile; uv run reflex export ${{ inputs.args }}
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key II
       id: key-2
       shell: bash
       run: uv run --with github-action-utils ${{ github.action_path }}/key.py
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Save Reflex Cache
       uses: actions/cache/save@v4
