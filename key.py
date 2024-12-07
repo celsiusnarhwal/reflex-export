@@ -9,7 +9,7 @@ import hashlib
 import importlib.metadata
 import platform
 
-import github_action_utils as gha
+import github_actions_utils as gha
 from reflex.utils.prerequisites import get_web_dir
 
 
