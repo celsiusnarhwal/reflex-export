@@ -36,7 +36,7 @@ runs:
     - name: Get Cache Key I
       id: key-1
       shell: bash
-      run: uv run --with github-actions-utils ${{ github.action_path }}/key.py
+      run: uv run --with github-action-utils ${{ github.action_path }}/key.py
 
     - name: Restore Reflex Cache
       uses: actions/cache/restore@v4
@@ -51,7 +51,7 @@ runs:
     - name: Get Cache Key II
       id: key-2
       shell: bash
-      run: uv run --with github-actions-utils ${{ github.action_path }}/key.py
+      run: uv run --with github-action-utils ${{ github.action_path }}/key.py
 
     - name: Save Reflex Cache
       uses: actions/cache/save@v4
