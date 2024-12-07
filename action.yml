@@ -22,6 +22,16 @@ runs:
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
+    - name: Check for rxconfig.py
+      shell: bash
+      run: | 
+        if [ -f rxconfig.py ]; then
+          :
+        else
+          echo "::error:: It doesn't look like the current directory is the root of your Reflex project. Maybe you should have passed project-root?"
+          exit 1
+        fi
+
     - name: Set Up uv
       uses: astral-sh/setup-uv@v3
 
