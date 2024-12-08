@@ -39,7 +39,7 @@ runs:
           get_config()
         except Exception:
           hachitool.fail("It doesn't look like this directory is the root of a Reflex project. Maybe you should've passed project-root?")
-      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}/fail
 
 
     - name: Get Web Directory
