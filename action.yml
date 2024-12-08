@@ -41,7 +41,7 @@ runs:
 
     - name: Get Web and Bun Paths
       id: paths
-      shell: uv run --with https://github.com/celsiusnarhwal/hachitool python {0}
+      shell: uv run --with hachitool python {0}
       run: |
         import hachitool
         from reflex.config import get_config
@@ -54,7 +54,7 @@ runs:
     - name: Get Cache Key I
       id: key-1
       shell: bash
-      run: uv run --with github-action-utils ${{ github.action_path }}/key.py
+      run: uv run --with hachitool ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Restore Reflex Cache
@@ -71,7 +71,7 @@ runs:
     - name: Get Cache Key II
       id: key-2
       shell: bash
-      run: uv run --with github-action-utils ${{ github.action_path }}/key.py
+      run: uv run --with hachitool ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Save Reflex Cache
