@@ -17,7 +17,7 @@ runs:
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
-    - name: Set Environment Variables
+    - name: Set Log Level
       shell: uv run --with hachitool python {0}
       run: |
         import os
