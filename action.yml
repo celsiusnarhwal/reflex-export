@@ -39,15 +39,15 @@ runs:
       run: uv run reflex init
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Get Web and Bun Paths
-      id: paths
+    - name: Get Web Directory
+      id: web
       shell: uv run --with hachitool python {0}
       run: |
         import hachitool
         from reflex.config import get_config
         from reflex.utils.prerequisites import get_web_dir
         
-        hachitool.set_output(web=get_web_dir().absolute(), bun=get_config().bun_path.absolute())
+        hachitool.set_output(web=get_web_dir().absolute())
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key I
@@ -59,7 +59,7 @@ runs:
     - name: Restore Reflex Cache
       uses: actions/cache/restore@v4
       with:
-        path: ${{ steps.paths.outputs.web }}
+        path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-1.outputs.key }}
 
     - name: Export Project
@@ -76,5 +76,5 @@ runs:
     - name: Save Reflex Cache
       uses: actions/cache/save@v4
       with:
-        path: ${{ steps.paths.outputs.web }}
+        path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-2.outputs.key }}
