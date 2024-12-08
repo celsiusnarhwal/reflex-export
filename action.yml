@@ -13,6 +13,10 @@ runs:
     - name: Set Up uv
       uses: astral-sh/setup-uv@v3
 
+    - name: Set Working Directory
+      shell: bash
+      run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
+
     - name: Set Environment Variables
       shell: uv run --with hachitool python {0}
       run: |
@@ -22,7 +26,6 @@ runs:
         import hachitool
         
         hachitool.set_env(
-          REFLEX_EXPORT_CWD=Path(os.getenv("PROJECT_ROOT")).absolute(),
           REFLEX_EXPORT_LOG_LEVEL=os.getenv("LOGLEVEL", "debug" if os.getenv("DEBUG") else "default")
         )
       env:
@@ -30,15 +33,11 @@ runs:
         DEBUG: ${{ runner.debug }}
 
     - name: Check Project Root
-      shell: uv run --with hachitool python {0}
+      shell: bash
       run: |
-        import hachitool
-        from reflex.config import get_config
-        
-        try:
-          get_config()
-        except Exception:
-          hachitool.fail("It doesn't look like this directory is the root of a Reflex project. Maybe you should've passed project-root?")
+        if [ ! -f rxconfig.py ]; then
+          echo "::error::It doesn't look like this directory is the root of a Reflex project. Maybe you should've passed project-root?"
+        fi
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
 
