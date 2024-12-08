@@ -63,7 +63,7 @@ runs:
 
     - name: Export Project
       shell: bash
-      run: uv run reflex export ${{ runner.debug && '--loglevel debug' || '' }} ${{ inputs.args }}
+      run: uv run reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
         LOG_LEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
