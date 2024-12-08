@@ -48,7 +48,10 @@ runs:
         from reflex.utils.prerequisites import get_web_dir
         
         hachitool.set_output("web", get_web_dir().absolute())
+        print(open(os.getenv("GITHUB_OUTPUT")).read())
         hachitool.set_output("bun", get_config().bun_path.absolute())
+        print(open(os.getenv("GITHUB_OUTPUT")).read())
+
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key I
