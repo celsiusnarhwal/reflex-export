@@ -10,37 +10,37 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Get Working Directory
-      shell: bash
-      run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
-
-    - name: Set Log Level
-      shell: bash
-      run: echo REFLEX_EXPORT_LOG_LEVEL="default" >> ${GITHUB_ENV}
-
-    - name: Enable Debug Logging
-      if: ${{ runner.debug }}
-      shell: bash
-      run: echo REFLEX_EXPORT_LOG_LEVEL=debug >> ${GITHUB_ENV}
-        
-    - name: Check for rxconfig.py
-      shell: bash
-      run: | 
-        if [ ! -f rxconfig.py ]; then
-          echo "::error::It doesn't look like the current directory is the root of a Reflex project. Maybe you should've passed project-root?"
-          exit 1
-        fi
-      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
-
     - name: Set Up uv
       uses: astral-sh/setup-uv@v3
 
-    - name: Initialize Reflex
-      shell: bash
-      run: uv run reflex init
-      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
+    - name: Set Environment Variables
+      shell: uv run --with hachitool python {0}
+      run: |
+        import os
+        from pathlib import Path
+        
+        import hachitool
+        
+        hachitool.set_env(
+          REFLEX_EXPORT_CWD=Path(os.getenv("PROJECT_ROOT")).absolute(),
+          REFLEX_EXPORT_LOG_LEVEL="debug" if os.getenv("DEBUG") else "default",
+        )
       env:
-        LOGLEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
+        PROJECT_ROOT: ${{ inputs.project-root }}
+        DEBUG: ${{ runner.debug }}
+
+    - name: Check Project Root
+      shell: uv run --with hachitool python {0}
+      run: |
+        import hachitool
+        from reflex.config import get_config
+        
+        try:
+          get_config()
+        except Exception:
+          hachitool.fail("It doesn't look like this directory is the root of a Reflex project. Maybe you should've passed project-root?")
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
+
 
     - name: Get Web Directory
       id: web
