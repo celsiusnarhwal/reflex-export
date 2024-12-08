@@ -41,14 +41,14 @@ runs:
 
     - name: Get Web and Bun Paths
       id: paths
-      shell: uv run --with github-action-utils python {0}
+      shell: uv run --with https://github.com/celsiusnarhwal/hachitool python {0}
       run: |
-        import github_action_utils as gha
+        import hachitool
         from reflex.config import get_config
         from reflex.utils.prerequisites import get_web_dir
         
-        gha.set_output("web", get_web_dir().absolute())
-        gha.set_output("bun", get_config().bun_path.absolute())
+        hachitool.set_output("web", get_web_dir().absolute())
+        hachitool.set_output("bun", get_config().bun_path.absolute())
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key I

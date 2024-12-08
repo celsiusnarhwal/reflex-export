@@ -2,7 +2,7 @@ import hashlib
 import importlib.metadata
 import platform
 
-import github_action_utils as gha
+import hachitool
 from reflex.utils.prerequisites import get_web_dir
 
 web = get_web_dir().absolute()
@@ -14,4 +14,4 @@ for lockfile in ["bun.lockb", "package-lock.json"]:
     if fp.exists():
         key_parts.append(hashlib.sha256(fp.read_bytes()).hexdigest())
 
-gha.set_output("key", "-".join(key_parts))
+hachitool.set_output("key", "-".join(key_parts))
