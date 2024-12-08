@@ -23,7 +23,7 @@ runs:
         
         hachitool.set_env(
           REFLEX_EXPORT_CWD=Path(os.getenv("PROJECT_ROOT")).absolute(),
-          REFLEX_EXPORT_LOG_LEVEL="debug" if os.getenv("DEBUG") else "default",
+          REFLEX_EXPORT_LOG_LEVEL=os.getenv("LOGLEVEL", "debug" if os.getenv("DEBUG") else "default")
         )
       env:
         PROJECT_ROOT: ${{ inputs.project-root }}
