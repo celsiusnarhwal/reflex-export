@@ -17,7 +17,7 @@ runs:
     - name: Enable Debug Logging
       if: ${{ runner.debug }}
       shell: bash
-      run: echo REFLEX_EXPORT_LOG_LEVEL=debug >> ${GITHUB_ENV}
+      run: echo REFLEX_EXPORT_LOG_LEVEL=DEBUG >> ${GITHUB_ENV}
         
     - name: Check for rxconfig.py
       shell: bash
