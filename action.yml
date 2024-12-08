@@ -36,7 +36,7 @@ runs:
       run: uv run reflex init
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
-        LOG_LEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
+        LOGLEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
 
     - name: Get Web Directory
       id: web
@@ -66,7 +66,7 @@ runs:
       run: uv run reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
-        LOG_LEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
+        LOGLEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
 
     - name: Get Cache Key II
       id: key-2
