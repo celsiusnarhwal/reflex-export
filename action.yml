@@ -14,6 +14,10 @@ runs:
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
+    - name: Set Log Level
+      shell: bash
+      run: echo REFLEX_EXPORT_LOG_LEVEL="default"
+
     - name: Enable Debug Logging
       if: ${{ runner.debug }}
       shell: bash
