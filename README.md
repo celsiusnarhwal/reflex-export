@@ -36,3 +36,6 @@ The action takes an optional `args` input which may be used to provide additiona
   with:
     args: --frontend-only --loglevel debug
 ```
+
+If [step debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging)
+is enable, the `--loglevel` option will default to `debug'.
