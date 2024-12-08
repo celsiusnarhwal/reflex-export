@@ -64,7 +64,7 @@ runs:
 
     - name: Export Project
       shell: bash
-      run: ${{ steps.paths.outputs.bun }} install --cwd ${{ steps.paths.outputs.web }} --frozen-lockfile; uv run reflex export ${{ inputs.args }}
+      run: uv run reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key II
