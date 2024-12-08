@@ -38,4 +38,4 @@ The action takes an optional `args` input which may be used to provide additiona
 ```
 
 If [step debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging)
-is enabled, the `--loglevel` option will default to `debug'.
+is enabled, the `--loglevel` option will default to `debug`.
