@@ -44,6 +44,7 @@ runs:
       shell: uv run --with hachitool python {0}
       run: |
         import hachitool
+        import os
         from reflex.config import get_config
         from reflex.utils.prerequisites import get_web_dir
         
