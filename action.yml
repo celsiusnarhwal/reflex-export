@@ -37,6 +37,7 @@ runs:
       run: |
         if [ ! -f rxconfig.py ]; then
           echo "::error::It doesn't look like this directory is the root of a Reflex project. Maybe you should've passed project-root?"
+          exit 1
         fi
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
