@@ -16,7 +16,7 @@ runs:
 
     - name: Set Log Level
       shell: bash
-      run: echo REFLEX_EXPORT_LOG_LEVEL="default"
+      run: echo REFLEX_EXPORT_LOG_LEVEL="default" >> ${GITHUB_ENV}
 
     - name: Enable Debug Logging
       if: ${{ runner.debug }}
