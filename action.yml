@@ -47,8 +47,7 @@ runs:
         from reflex.config import get_config
         from reflex.utils.prerequisites import get_web_dir
         
-        hachitool.set_output("web", get_web_dir().absolute())
-        hachitool.set_output("bun", get_config().bun_path.absolute())
+        hachitool.set_output(web=get_web_dir().absolute(), bun=get_config().bun_path.absolute())
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key I
