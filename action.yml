@@ -5,6 +5,7 @@ inputs:
     required: false
   project-root:
     description: The root of your Reflex project, if not the current working directory.
+    required: false
     default: .
 
 runs:
@@ -16,21 +17,6 @@ runs:
     - name: Set Working Directory
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
-
-    - name: Set Log Level
-      shell: uv run --with hachitool python {0}
-      run: |
-        import os
-        from pathlib import Path
-        
-        import hachitool
-        
-        hachitool.set_env(
-          REFLEX_EXPORT_LOG_LEVEL=os.getenv("LOGLEVEL", "debug" if os.getenv("DEBUG") else "default")
-        )
-      env:
-        PROJECT_ROOT: ${{ inputs.project-root }}
-        DEBUG: ${{ runner.debug }}
 
     - name: Check Project Root
       shell: bash
@@ -58,7 +44,7 @@ runs:
       run: uv run --with hachitool ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Restore Reflex Cache
+    - name: Restore Cache
       uses: actions/cache/restore@v4
       with:
         path: ${{ steps.web.outputs.web }}
@@ -69,7 +55,7 @@ runs:
       run: uv run reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
-        LOGLEVEL: ${{ env.REFLEX_EXPORT_LOG_LEVEL }}
+        LOGLEVEL: ${{ env.LOGLEVEL || runner.debug && 'debug' || 'default' }}
 
     - name: Get Cache Key II
       id: key-2
@@ -77,7 +63,7 @@ runs:
       run: uv run --with hachitool ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Save Reflex Cache
+    - name: Save Cache
       uses: actions/cache/save@v4
       with:
         path: ${{ steps.web.outputs.web }}

@@ -1,6 +1,7 @@
 # Reflex Export Action
 
-This GitHub Action exports a [Reflex](https://reflex.dev) project while caching its Node.js dependencies.
+This GitHub Action exports a [Reflex](https://reflex.dev) project while caching its Node.js dependencies and
+Next.js build artifacts.
 
 ## Usage
 
