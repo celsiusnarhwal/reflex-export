@@ -18,20 +18,6 @@ runs:
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
-    - name: Set Log Level
-      shell: uv run --with hachitool python {0}
-      run: |
-        import os
-        
-        import hachitool
-        
-        hachitool.set_env(
-          REFLEX_EXPORT_LOG_LEVEL=os.getenv("LOGLEVEL", "debug" if os.getenv("DEBUG") else "default")
-        )
-      env:
-        PROJECT_ROOT: ${{ inputs.project-root }}
-        DEBUG: ${{ runner.debug }}
-
     - name: Check Project Root
       shell: bash
       run: |
