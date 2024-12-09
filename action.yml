@@ -21,7 +21,6 @@ runs:
       shell: uv run --with hachitool python {0}
       run: |
         import os
-        from pathlib import Path
         
         import hachitool
         
