@@ -5,6 +5,8 @@ inputs:
     required: false
   project-root:
     description: The root of your Reflex project, if not the current working directory.
+    required: false
+    default: .
 
 runs:
   using: composite
