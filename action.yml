@@ -44,7 +44,7 @@ runs:
       run: uv run --with hachitool ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Restore Reflex Cache
+    - name: Restore Cache
       uses: actions/cache/restore@v4
       with:
         path: ${{ steps.web.outputs.web }}
@@ -63,7 +63,7 @@ runs:
       run: uv run --with hachitool ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Save Reflex Cache
+    - name: Save Cache
       uses: actions/cache/save@v4
       with:
         path: ${{ steps.web.outputs.web }}
