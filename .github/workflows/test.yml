@@ -12,7 +12,7 @@ jobs:
   test:
     strategy:
       matrix:
-        pm: pip, uv, poetry, pdm
+        pm: ["pip", "uv", "poetry", "pdm"]
     steps:
       - name: Set Up uv
         uses: astral-sh/setup-uv@v3
