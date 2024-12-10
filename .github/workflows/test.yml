@@ -31,6 +31,6 @@ jobs:
         run: uv run reflex run --template
 
       - name: Export Reflex Project
-        run: celsiusnarhwal/reflex-export@main
+        uses: celsiusnarhwal/reflex-export@main
         with:
           args: --loglevel debug
