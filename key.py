@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "hachitool",
+# ]
+# ///
+
 import hashlib
 import importlib.metadata
 import platform

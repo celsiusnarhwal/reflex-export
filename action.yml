@@ -41,7 +41,7 @@ runs:
     - name: Get Cache Key I
       id: key-1
       shell: bash
-      run: uv run --with hachitool ${{ github.action_path }}/key.py
+      run: uv run ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Restore Cache
@@ -60,7 +60,7 @@ runs:
     - name: Get Cache Key II
       id: key-2
       shell: bash
-      run: uv run --with hachitool ${{ github.action_path }}/key.py
+      run: uv run ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Save Cache
