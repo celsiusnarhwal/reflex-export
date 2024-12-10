@@ -30,13 +30,8 @@ runs:
 
     - name: Get Web Directory
       id: web
-      shell: uv run --with hachitool python {0}
-      run: |
-        import hachitool
-        from reflex.config import get_config
-        from reflex.utils.prerequisites import get_web_dir
-        
-        hachitool.set_output(web=get_web_dir().absolute())
+      shell: bash
+      run: uv run ${{ github.action_path }}/web.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Get Cache Key I
