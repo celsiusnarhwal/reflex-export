@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Reflex (Poetry/PDM)
         if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
-        run: uvx ${{ matrix.pm }} init -n && uvx ${{ matrix.pdm }} add reflex
+        run: uvx ${{ matrix.pm }} init -n && uvx ${{ matrix.pm }} add reflex
         env:
           POETRY_VIRTUALENVS_IN_PROJECT: true
 
