@@ -14,6 +14,8 @@ jobs:
     strategy:
       matrix:
         pm: ["pip", "uv", "poetry", "pdm"]
+    env:
+      UV_NO_CONFIG: true
     steps:
       - name: Set Up uv
         uses: astral-sh/setup-uv@v3
