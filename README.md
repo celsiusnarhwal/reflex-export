@@ -26,7 +26,7 @@ or the value of the `UV_PROJECT_ENVIRONMENT` environment variable if it is set
   # Install Reflex and other dependencies using the tool of your choice, then...
 
 - name: Export Project
-  uses: celsiusnarhwal/reflex-export@main
+  uses: celsiusnarhwal/reflex-export@v1
 ```
 
 ### Inputs
