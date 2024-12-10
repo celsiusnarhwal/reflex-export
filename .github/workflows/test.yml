@@ -22,9 +22,13 @@ jobs:
         if: ${{ matrix.pm == 'pip' }}
         run: pip install reflex
 
-      - name: Install Reflex (Others)
-        if: ${{ matrix.pm != 'pip' }}
-        run: uvx ${{ matrix.pm }} add reflex
+      - name: Install Reflex (uv)
+        if: ${{ matrix.pm == 'uv' }}
+        run: uv init && uv add reflex
+
+      - name: Install Reflex (Poetry/PDM)
+        if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
+        run: uvx ${{ matrix.pm }} init -n && uvx ${{ matrix.pdm }} add reflex
         env:
           POETRY_VIRTUALENVS_IN_PROJECT: true
 
