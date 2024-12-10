@@ -12,6 +12,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fat: false
       matrix:
         pm: ["pip", "uv", "poetry", "pdm"]
     steps:
