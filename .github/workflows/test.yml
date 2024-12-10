@@ -14,8 +14,6 @@ jobs:
     strategy:
       matrix:
         pm: ["pip", "uv", "poetry", "pdm"]
-    env:
-      UV_NO_CONFIG: true
     steps:
       - name: Set Up uv
         uses: astral-sh/setup-uv@v3
@@ -35,7 +33,7 @@ jobs:
           POETRY_VIRTUALENVS_IN_PROJECT: true
 
       - name: Initialize Reflex Project
-        run: uv run reflex init --template blank
+        run: uv run --no-config reflex init --template blank
 
       - name: Export Reflex Project
         uses: celsiusnarhwal/reflex-export@main
