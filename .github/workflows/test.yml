@@ -1,0 +1,36 @@
+name: Test Action
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        pm: pip, uv, poetry, pdm
+    steps:
+      - name: Set Up uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install Reflex (pip)
+        if: ${{ matrix.pm == 'pip' }}
+        run: pip install reflex
+
+      - name: Install Reflex (Others)
+        if: ${{ matrix.pm != pip }}
+        run: uvx ${{ matrix.pm }} add reflex
+        env:
+          POETRY_VIRTUALENVS_IN_PROJECT: true
+
+      - name: Initialize Reflex Project
+        run: uv run reflex run --template
+
+      - name: Export Reflex Project
+        run: celsiusnarhwal/reflex-export@main
+        with:
+          args: --loglevel debug
