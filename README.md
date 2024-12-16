@@ -10,7 +10,7 @@ This action does not currently support Windows runners.
 ## Usage
 
 Reflex must be available on the system path or in your project's virtual environment before you run this action.
-If a `poetry.lock` file is found at the root of your Reflex project, the action will use Poetry to determine where
+If a `poetry.lock` file is found at the root of your Reflex project, the action will use [Poetry](https://python-poetry.org) to determine where
 the virtual environment is located; otherwise, it will look for a `.venv` file at your project's root.
 
 ```yaml
