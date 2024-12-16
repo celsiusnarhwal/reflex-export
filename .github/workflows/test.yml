@@ -10,11 +10,12 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        os: ["ubuntu", "macos", "windows"]
         pm: ["pip", "uv", "poetry", "pdm"]
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Set Up uv
         uses: astral-sh/setup-uv@v3
