@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
     - name: Set Up uv
-      uses: astral-sh/setup-uv@v3
+      uses: astral-sh/setup-uv@v4
 
     - name: Install rxahelper
       shell: bash
