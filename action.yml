@@ -15,7 +15,7 @@ runs:
     - name: Add Virtual Environment to System Path
       shell: bash
       run: |
-        cat ${GITHUB_PATH} > '${{ runner.temp }}/.original-path;
+        cat ${GITHUB_PATH} > '${{ runner.temp }}/.original-path'
         echo "$(dirname $(poetry env info --executable) || realpath '.venv/bin'):${PATH}" > ${GITHUB_PATH}
 
     - name: Set Working Directory
