@@ -9,7 +9,7 @@ Reflex must be available on the system path or in your project's virtual environ
 In the latter case, the virtual environment must be located in a `.venv` folder at the root of your Reflex project.
 
 > [!WARNING]
-> This means [Poetry](https://python-poetry.org) users must do one of the following prior to installing their project's dependencies:
+> [Poetry](https://python-poetry.org) users must do one of the following prior to installing their project's dependencies:
 > - set [`virtualenvs.in-project`](https://python-poetry.org/docs/configuration#virtualenvsin-project) to `true`
 > - set [`virtualenvs.create`](https://python-poetry.org/docs/configuration#virtualenvscreate) to `false`
 
