@@ -30,11 +30,13 @@ runs:
         
         if [ -f "poetry.lock" ]; then
           venv=$(dirname $(poetry env info --executable))
-        else
+        elif [ -d ".venv/bin" ]; then
           venv=$(realpath .venv/bin)
         fi
         
-        echo "${venv}:${PATH}" > ${GITHUB_PATH}
+        if [ -n ${venv} ]; then
+          echo "${venv}:${PATH}" > ${GITHUB_PATH}
+        fi
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
 
