@@ -32,6 +32,7 @@ runs:
           venv=$(dirname $(poetry env info --executable))
         else
           venv=$(realpath .venv/bin)
+        fi
         
         echo "${venv}:${PATH}" > ${GITHUB_PATH}
 
