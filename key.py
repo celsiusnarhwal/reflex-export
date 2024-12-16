@@ -21,4 +21,4 @@ for lockfile in ["bun.lockb", "package-lock.json"]:
     if fp.exists():
         key_parts.append(hashlib.sha256(fp.read_bytes()).hexdigest())
 
-hachitool.set_output("key", "-".join(key_parts))
+hachitool.set_output("get_key", "-".join(key_parts))
