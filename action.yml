@@ -19,15 +19,22 @@ runs:
         echo "::error::This action does not currently support Windows runners."
         exit 1
 
+    - name: Set Working Directory
+      shell: bash
+      run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
+
     - name: Add Virtual Environment to System Path
       shell: bash
       run: |
         cat ${GITHUB_PATH} > ${{ runner.temp }}/.original-path
-        echo "$(dirname $(poetry env info --executable) || realpath .venv/bin):${PATH}" > ${GITHUB_PATH}
+        
+        if [ -f "poetry.lock" ]; then
+          venv=$(dirname $(poetry env info --executable))
+        else
+          venv=$(realpath .venv/bin)
+        
+        echo "${venv}:${PATH}" > ${GITHUB_PATH}
 
-    - name: Set Working Directory
-      shell: bash
-      run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
     - name: Check Project Root
       shell: bash
