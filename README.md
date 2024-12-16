@@ -1,5 +1,7 @@
 # Reflex Export Action
 
+[![Tests](https://github.com/celsiusnarhwal/reflex-export/actions/workflows/test.yml/badge.svg)](https://github.com/celsiusnarhwal/reflex-export/actions/workflows/test.yml)
+
 This GitHub Action exports a [Reflex](https://reflex.dev) project while caching its Node.js dependencies and
 Next.js build artifacts.
 
