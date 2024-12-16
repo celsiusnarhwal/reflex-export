@@ -16,8 +16,8 @@ runs:
       uses: astral-sh/setup-uv@v3
 
     - name: Install rxahelper
-      shell: uv run bash {0}
-      run: uv tool install '${{ github.action_path }}/rxahelper' --with reflex==$(pip show reflex | grep 'Version' | cut -d ' ' -f 2)
+      shell: bash
+      run: uv tool install '${{ github.action_path }}/rxahelper' --with reflex==$(uv run pip show reflex | grep 'Version' | cut -d ' ' -f 2)
 
     - name: Set Working Directory
       shell: bash
