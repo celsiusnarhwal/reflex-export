@@ -17,7 +17,7 @@ runs:
 
     - name: Install rxahelper
       shell: bash
-      run: uv tool install '${{ github.action_path }}/rxahelper' --with reflex==$(uv run pip show reflex | grep 'Version' | cut -d ' ' -f 2)
+      run: uv tool install --with reflex==$(uv run pip show reflex | grep 'Version' | cut -d ' ' -f 2) '${{ github.action_path }}/rxahelper'
 
     - name: Set Working Directory
       shell: bash
