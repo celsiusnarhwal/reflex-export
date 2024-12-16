@@ -16,7 +16,7 @@ runs:
       shell: bash
       run: |
         cat ${GITHUB_PATH} > ${{ runner.temp }}/.original-path
-        echo "$(poetry env info --path || realpath .venv/bin):${PATH}" > ${GITHUB_PATH}
+        echo "$(dirname $(poetry env info --executable) || realpath .venv/bin):${PATH}" > ${GITHUB_PATH}
 
     - name: Set Working Directory
       shell: bash
