@@ -6,12 +6,8 @@ Next.js build artifacts.
 ## Usage
 
 Reflex must be available on the system path or in your project's virtual environment before you run this action.
-In the latter case, the virtual environment must be located in a `.venv` folder at the root of your Reflex project.
-
-> [!WARNING]
-> [Poetry](https://python-poetry.org) users must do one of the following prior to installing their project's dependencies:
-> - set [`virtualenvs.in-project`](https://python-poetry.org/docs/configuration#virtualenvsin-project) to `true`
-> - set [`virtualenvs.create`](https://python-poetry.org/docs/configuration#virtualenvscreate) to `false`
+If a `poetry.lock` file is found at the root of your Reflex project, the action will use Poetry to determine where
+the virtual environment is located; otherwise, it will look for a `.venv` file at your project's root.
 
 ```yaml
 - name: Checkout Repository
