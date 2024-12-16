@@ -39,7 +39,6 @@ runs:
         fi
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-
     - name: Check Project Root
       shell: bash
       run: |
