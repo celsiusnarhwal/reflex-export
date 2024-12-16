@@ -12,8 +12,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set Up uv
-      uses: astral-sh/setup-uv@v4
+#    - name: Set Up uv
+#      uses: astral-sh/setup-uv@v4
+
+    - name: Add Virtual Environment to System Path
+      shell: bash
+      run: |
+        cat ${GITHUB_PATH} > ${{ runner.temp }}/.original-path
+        echo "$(realpath .venv/bin):${PATH}" > ${GITHUB_PATH}
 
     - name: Set Working Directory
       shell: bash
@@ -30,7 +36,7 @@ runs:
 
     - name: Get Web Directory
       id: web
-      shell: uv run python {0}
+      shell: python
       run: |
         import os
         from reflex.utils.prerequisites import get_web_dir
@@ -41,7 +47,7 @@ runs:
     - name: Get Cache Key I
       id: key-1
       shell: bash
-      run: uv run '${{ github.action_path }}/key.py'
+      run: python '${{ github.action_path }}/key.py'
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Restore Cache
@@ -52,7 +58,7 @@ runs:
 
     - name: Export Project
       shell: bash
-      run: uv run reflex export ${{ inputs.args }}
+      run: reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
         LOGLEVEL: ${{ env.LOGLEVEL || runner.debug && 'debug' || 'default' }}
@@ -60,7 +66,7 @@ runs:
     - name: Get Cache Key II
       id: key-2
       shell: bash
-      run: uv run '${{ github.action_path }}/key.py'
+      run: python '${{ github.action_path }}/key.py'
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Save Cache
@@ -68,3 +74,8 @@ runs:
       with:
         path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-2.outputs.key }}
+
+    - name: Restore System Path
+      if: ${{ always() }}
+      shell: bash
+      run: cat ${{ runner.temp }}/.original-path > ${GITHUB_PATH}
