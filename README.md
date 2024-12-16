@@ -3,6 +3,8 @@
 This GitHub Action exports a [Reflex](https://reflex.dev) project while caching its Node.js dependencies and
 Next.js build artifacts.
 
+This action does not currently support Windows runners.
+
 ## Usage
 
 Reflex must be available on the system path or in your project's virtual environment before you run this action.
