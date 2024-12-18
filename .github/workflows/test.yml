@@ -18,10 +18,13 @@ jobs:
         pm: ["pip", "uv", "poetry", "pdm"]
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - name: Set Up uv
-        uses: astral-sh/setup-uv@v4
+      - name: Set Up Python
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
+
+      - name: Set Up uv
+        uses: astral-sh/setup-uv@v4
 
       - name: Install Package Manager
         if: ${{ matrix.pm != 'pip' && matrix.pm != 'uv' }}
