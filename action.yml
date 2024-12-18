@@ -104,6 +104,7 @@ runs:
 
     - name: Restore Environment Variables
       if: ${{ always() && steps.save-env.status == 'success' }}
+      shell: bash
       run: cat ${{ runner.temp }}/.reflex-export-github-env > ${GITHUB_ENV}
 
     - name: Restore System Path
