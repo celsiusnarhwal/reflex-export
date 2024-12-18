@@ -23,6 +23,18 @@ runs:
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
+    - name: Set Up uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set UV_NO_PROJECT
+      uses: gacts/run-and-post-run@v1
+      with:
+        run: |
+          echo "${UV_NO_PROJECT}=${UV_NO_PROJECT:-'false'}" > ${{ runner.temp }}/.uv-no-project
+          echo "${UV_NO_PROJECT}=true" >> ${GITHUB_ENV}
+        post: cat ${{ runner.temp }}/.uv-no-project >> ${GITHUB_ENV}
+        shell: bash
+
     - name: Add Virtual Environment to System Path
       shell: bash
       run: |
