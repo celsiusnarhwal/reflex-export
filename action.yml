@@ -19,6 +19,12 @@ runs:
         echo "::error::This action does not currently support Windows runners."
         exit 1
 
+      name: Save Environment Variables
+      uses: gacts/run-and-post-run@v1
+      with:
+        run: cat ${GITHUB_ENV} > ${{ runner.temp }}/.reflex-export-github-env
+        post: cat ${{ runner.temp }}/.reflex-export-github-env > ${GITHUB_ENV}
+
     - name: Set Working Directory
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
@@ -26,17 +32,9 @@ runs:
     - name: Set Up uv
       uses: astral-sh/setup-uv@v4
 
-    - name: Set UV_NO_PROJECT
-      uses: gacts/run-and-post-run@v1
-      with:
-        run: |
-          echo "_REFLEX_EXPORT_ORIGINAL_UV_NO_PROJECT=${UV_NO_PROJECT:-'false'}" >> ${GITHUB_ENV}
-          echo "UV_NO_PROJECT=true" >> ${GITHUB_ENV}
-        post: echo "${UV_NO_PROJECT}=${_REFLEX_EXPORT_ORIGINAL_UV_NO_PROJECT}" >> ${GITHUB_ENV}
-        shell: bash
-
     - name: Add Virtual Environment to System Path
       shell: bash
+      if: ${{ runner.os == 'skip' }}
       run: |
         cat ${GITHUB_PATH} > ${{ runner.temp }}/.original-path
         
@@ -62,7 +60,7 @@ runs:
 
     - name: Get Web Directory
       id: web
-      shell: python
+      shell: uv run python {0}
       run: |
         import os
         from reflex.utils.prerequisites import get_web_dir
@@ -73,7 +71,7 @@ runs:
     - name: Get Cache Key I
       id: key-1
       shell: bash
-      run: python ${{ github.action_path }}/key.py
+      run: uv run ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Restore Cache
@@ -84,7 +82,7 @@ runs:
 
     - name: Export Project
       shell: bash
-      run: reflex export ${{ inputs.args }}
+      run: uv run reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
         LOGLEVEL: ${{ env.LOGLEVEL || runner.debug && 'debug' || 'default' }}
@@ -92,7 +90,7 @@ runs:
     - name: Get Cache Key II
       id: key-2
       shell: bash
-      run: python ${{ github.action_path }}/key.py
+      run: uv run ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Save Cache
@@ -102,6 +100,6 @@ runs:
         key: ${{ steps.key-2.outputs.key }}
 
     - name: Restore System Path
-      if: ${{ always() }}
+      if: ${{ runner.os == 'skip' }}
       shell: bash
       run: cat ${{ runner.temp }}/.original-path > ${GITHUB_PATH}
