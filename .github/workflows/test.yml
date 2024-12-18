@@ -50,7 +50,7 @@ jobs:
           POETRY_VIRTUALENVS_IN_PROJECT: true
              
       - name: Initialize Reflex Project
-        run: uv run reflex init --template blank
+        run: uv run --no-project reflex init --template blank
 
       - name: Export Reflex Project
         uses: celsiusnarhwal/reflex-export@main
