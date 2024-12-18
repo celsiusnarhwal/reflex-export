@@ -19,7 +19,7 @@ runs:
         echo "::error::This action does not currently support Windows runners."
         exit 1
 
-      name: Save Environment Variables
+    - name: Save Environment Variables
       uses: gacts/run-and-post-run@v1
       with:
         run: cat ${GITHUB_ENV} > ${{ runner.temp }}/.reflex-export-github-env
