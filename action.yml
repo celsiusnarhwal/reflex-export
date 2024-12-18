@@ -30,8 +30,8 @@ runs:
       uses: gacts/run-and-post-run@v1
       with:
         run: |
-          echo "${UV_NO_PROJECT}=${{ env.UV_NO_PROJECT || 'false' }}" > ${{ runner.temp }}/.uv-no-project
-          echo "${UV_NO_PROJECT}=true" >> ${GITHUB_ENV}
+          echo "${UV_NO_PROJECT}=${UV_NO_PROJECT:-'false'} > ${{ runner.temp }}/.uv-no-project
+          echo "UV_NO_PROJECT=true" >> ${GITHUB_ENV}
         post: cat ${{ runner.temp }}/.uv-no-project >> ${GITHUB_ENV}
         shell: bash
 
