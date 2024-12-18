@@ -19,18 +19,9 @@ runs:
         echo "::error::This action does not currently support Windows runners."
         exit 1
 
-    - name: Save Environment Variables
-      id: save-env
-      shell: bash
-      run: cat ${GITHUB_ENV} > ${{ runner.temp }}/.reflex-export-github-env
-        
     - name: Set Working Directory
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
-
-    - name: Disable uv Project Discovery
-      shell: bash
-      run: echo UV_NO_PROJECT=true >> ${GITHUB_ENV}
 
     - name: Set Up uv
       uses: astral-sh/setup-uv@v4
@@ -63,7 +54,7 @@ runs:
 
     - name: Get Web Directory
       id: web
-      shell: uv run python {0}
+      shell: uv run --no-project python {0}
       run: |
         import os
         from reflex.utils.prerequisites import get_web_dir
@@ -74,7 +65,7 @@ runs:
     - name: Get Cache Key I
       id: key-1
       shell: bash
-      run: uv run ${{ github.action_path }}/key.py
+      run: uv run --no-project ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Restore Cache
@@ -85,7 +76,7 @@ runs:
 
     - name: Export Project
       shell: bash
-      run: uv run reflex export ${{ inputs.args }}
+      run: uv run --no-project reflex export ${{ inputs.args }}
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
       env:
         LOGLEVEL: ${{ env.LOGLEVEL || runner.debug && 'debug' || 'default' }}
@@ -93,7 +84,7 @@ runs:
     - name: Get Cache Key II
       id: key-2
       shell: bash
-      run: uv run ${{ github.action_path }}/key.py
+      run: uv run --no-project ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Save Cache
@@ -101,11 +92,6 @@ runs:
       with:
         path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-2.outputs.key }}
-
-    - name: Restore Environment Variables
-      if: ${{ always() && steps.save-env.conclusion == 'success' }}
-      shell: bash
-      run: cat ${{ runner.temp }}/.reflex-export-github-env > ${GITHUB_ENV}
 
     - name: Restore System Path
       if: ${{ runner.os == 'skip' }}
