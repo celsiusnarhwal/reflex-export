@@ -26,23 +26,6 @@ runs:
     - name: Set Up uv
       uses: astral-sh/setup-uv@v4
 
-    - name: Add Virtual Environment to System Path
-      shell: bash
-      if: ${{ runner.os == 'skip' }}
-      run: |
-        cat ${GITHUB_PATH} > ${{ runner.temp }}/.original-path
-        
-        if [ -f "poetry.lock" ]; then
-          venv=$(dirname $(poetry env info --executable))
-        elif [ -d ".venv/bin" ]; then
-          venv=$(realpath .venv/bin)
-        fi
-        
-        if [ -n ${venv} ]; then
-          echo "${venv}:${PATH}" > ${GITHUB_PATH}
-        fi
-      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
-
     - name: Check Project Root
       shell: bash
       run: |
@@ -92,8 +75,3 @@ runs:
       with:
         path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-2.outputs.key }}
-
-    - name: Restore System Path
-      if: ${{ runner.os == 'skip' }}
-      shell: bash
-      run: cat ${{ runner.temp }}/.original-path > ${GITHUB_PATH}
