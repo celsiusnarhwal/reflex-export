@@ -23,9 +23,6 @@ runs:
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
 
-    - name: Set Up uv
-      uses: astral-sh/setup-uv@v4
-
     - name: Check Project Root
       shell: bash
       run: |
@@ -34,6 +31,9 @@ runs:
           exit 1
         fi
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
+
+    - name: Set Up uv
+      uses: astral-sh/setup-uv@v4
 
     - name: Get Web Directory
       id: web
