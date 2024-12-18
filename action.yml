@@ -20,11 +20,10 @@ runs:
         exit 1
 
     - name: Save Environment Variables
-      uses: gacts/run-and-post-run@v1
-      with:
-        run: cat ${GITHUB_ENV} > ${{ runner.temp }}/.reflex-export-github-env
-        post: cat ${{ runner.temp }}/.reflex-export-github-env > ${GITHUB_ENV}
-
+      id: save-env
+      shell: bash
+      run: cat ${GITHUB_ENV} > ${{ runner.temp }}/.reflex-export-github-env
+        
     - name: Set Working Directory
       shell: bash
       run: echo REFLEX_EXPORT_CWD=$(realpath ${{ inputs.project-root }}) >> ${GITHUB_ENV}
@@ -102,6 +101,10 @@ runs:
       with:
         path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-2.outputs.key }}
+
+    - name: Restore Environment Variables
+      if: ${{ always() && steps.save-env.status == 'success' }}
+      run: cat ${{ runner.temp }}/.reflex-export-github-env > ${GITHUB_ENV}
 
     - name: Restore System Path
       if: ${{ runner.os == 'skip' }}
