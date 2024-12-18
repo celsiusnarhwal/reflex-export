@@ -103,7 +103,7 @@ runs:
         key: ${{ steps.key-2.outputs.key }}
 
     - name: Restore Environment Variables
-      if: ${{ always() && steps.save-env.status == 'success' }}
+      if: ${{ always() && steps.save-env.conclusion == 'success' }}
       shell: bash
       run: cat ${{ runner.temp }}/.reflex-export-github-env > ${GITHUB_ENV}
 
