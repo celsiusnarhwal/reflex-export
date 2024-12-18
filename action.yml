@@ -30,9 +30,9 @@ runs:
       uses: gacts/run-and-post-run@v1
       with:
         run: |
-          echo ${UV_NO_PROJECT:-'false'} > ${{ runner.temp }}/.uv-no-project
+          echo "_REFLEX_EXPORT_ORIGINAL_UV_NO_PROJECT=${UV_NO_PROJECT:-'false'}" >> ${GITHUB_ENV}
           echo "UV_NO_PROJECT=true" >> ${GITHUB_ENV}
-        post: cat "${UV_NO_PROJECT}=${{ runner.temp }}/.uv-no-project" >> ${GITHUB_ENV}
+        post: cat "${UV_NO_PROJECT}=${_REFLEX_EXPORT_ORIGINAL_UV_NO_PROJECT}" >> ${GITHUB_ENV}
         shell: bash
 
     - name: Add Virtual Environment to System Path
