@@ -16,7 +16,7 @@ This action does not currently support Windows runners.
 > 
 > If your preferred package manager has a default behavioer of storing virtual environments somewhere else 
 > (e.g., [Poetry](https://python-poetry.org/docs/configuration/#virtualenvsin-project), [pipenv](https://pipenv.pypa.io/en/latest/virtualenv.html#custom-virtual-environment-location)), you will
-> need to either configure it to use the in-project `.venv` directory or install packages into the system environment. If that isn't 
+> need to configure it to either use the in-project `.venv` directory or install packages into the system environment. If that isn't 
 > possible, you can use the [`interpreter` input](#inputs) to provide a path to the virtual environment's Python interpreter.
 
 ```yaml
