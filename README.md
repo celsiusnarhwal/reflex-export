@@ -9,9 +9,15 @@ This action does not currently support Windows runners.
 
 ## Usage
 
-Reflex must be available on the system path or in your project's virtual environment before you run this action.
-If a `poetry.lock` file is found at the root of your Reflex project, the action will use [Poetry](https://python-poetry.org) to determine where
-the virtual environment is located; otherwise, it will look for a `.venv` directory at your project's root.
+> [!IMPORTANT]
+> Reflex must be available on the system path or in your project's virtual environment before you run this action.
+> In the latter case, the virtual environment must be located in a `.venv` directory that is in either your project's
+> root or one of its parent directories.
+> 
+> If your preferred package manager has a default behavioer of storing virtual environments somewhere else 
+> (e.g., [Poetry](https://python-poetry.org/docs/configuration/#virtualenvsin-project), [pipenv](https://pipenv.pypa.io/en/latest/virtualenv.html#custom-virtual-environment-location), you will
+> need to either configure it to use `.venv` directory or install packages into the system environment. If that isn't 
+> possible, you can use the [`interpreter` input](#inputs) to provide a path to the virtual environment's Python interpreter.
 
 ```yaml
 - name: Checkout Repository
@@ -22,6 +28,7 @@ the virtual environment is located; otherwise, it will look for a `.venv` direct
 - name: Export Project
   uses: celsiusnarhwal/reflex-export@v1
 ```
+
 
 ### Inputs
 
