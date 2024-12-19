@@ -50,7 +50,8 @@ jobs:
 
       - if: ${{ matrix.pm == 'poetry' }}
         shell: bash
-        run: echo "UV_PYTHON=$(poetry env info --executable)" >> ${GITHUB_ENV}
+        id: interpreter
+        run: echo "interpeter=$(poetry env info --executable)" >> ${GITHUB_OUTPUT}
 
       - name: Initialize Reflex Project
         run: uv run --no-project reflex init --template blank
@@ -59,3 +60,4 @@ jobs:
         uses: celsiusnarhwal/reflex-export@main
         with:
           args: --loglevel debug
+          interpreter: ${{ steps.interpreter.outputs.interpreter }}

@@ -5,9 +5,11 @@ inputs:
     description: Arguments to `reflex export`.
     required: false
   project-root:
-    description: The root of your Reflex project, if not the current working directory.
+    description: The path to the root of your Reflex project. May be absolute or relative to the current working directory. Defaults to the current working directory.
     required: false
     default: .
+  interpreter:
+    description: The path to the Python interpreter the action should use. May be absolute or relative to `project-root`.
 
 runs:
   using: composite
@@ -18,6 +20,10 @@ runs:
       run: |
         echo "::error::This action does not currently support Windows runners."
         exit 1
+
+    - name: Save Environment
+      shell: bash
+      run: cat ${GITHUB_ENV} > ${{ runner.temp }}/.reflex-export-original-env
 
     - name: Set Working Directory
       shell: bash
@@ -34,6 +40,8 @@ runs:
 
     - name: Set Up uv
       uses: astral-sh/setup-uv@v4
+      env:
+        UV_PYTHON: ${{ inputs.interpreter }}
 
     - name: Get Web Directory
       id: web
@@ -75,3 +83,7 @@ runs:
       with:
         path: ${{ steps.web.outputs.web }}
         key: ${{ steps.key-2.outputs.key }}
+
+    - name: Restore Environment
+      shell: bash
+      run: cat ${{ runner.temp }}/.reflex-export-original-env > ${GITHUB_ENV}
