@@ -41,6 +41,8 @@ jobs:
       - name: Install Reflex (pipenv)
         if: ${{ matrix.pm == 'pipenv' }}
         run: pipenv install reflex
+        env:
+          PIPENV_VENV_IN_PROJECT: true
 
       - name: Install Reflex (PDM/Poetry)
         if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
