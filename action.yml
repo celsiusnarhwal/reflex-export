@@ -38,10 +38,12 @@ runs:
         fi
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
+    - name: Set Python Interpreter
+      if: ${{ inputs.interpreter }}
+      run: echo "UV_PYTHON=${{ inputs.interpreter }}" >> ${GITHUB_ENV}
+
     - name: Set Up uv
       uses: astral-sh/setup-uv@v4
-      env:
-        UV_PYTHON: ${{ inputs.interpreter }}
 
     - name: Get Web Directory
       id: web
