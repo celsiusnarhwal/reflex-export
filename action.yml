@@ -56,8 +56,8 @@ runs:
         print(f"web={get_web_dir().absolute()}", file=open(os.getenv("GITHUB_OUTPUT"), "a"))
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
-    - name: Get Cache Key I
-      id: key-1
+    - name: Compute Cache Key
+      id: compute-key
       shell: bash
       run: uv run --no-project ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
@@ -66,7 +66,7 @@ runs:
       uses: actions/cache/restore@v4
       with:
         path: ${{ steps.web.outputs.web }}
-        key: ${{ steps.key-1.outputs.key }}
+        key: ${{ steps.compute-key.outputs.key }}
 
     - name: Export Project
       shell: bash
@@ -75,8 +75,8 @@ runs:
       env:
         LOGLEVEL: ${{ env.LOGLEVEL || runner.debug && 'debug' || 'default' }}
 
-    - name: Get Cache Key II
-      id: key-2
+    - name: Recompute Cache Key
+      id: recompute-key
       shell: bash
       run: uv run --no-project ${{ github.action_path }}/key.py
       working-directory: ${{ env.REFLEX_EXPORT_CWD }}
@@ -85,7 +85,7 @@ runs:
       uses: actions/cache/save@v4
       with:
         path: ${{ steps.web.outputs.web }}
-        key: ${{ steps.key-2.outputs.key }}
+        key: ${{ steps.recompute-key.outputs.key }}
 
     - name: Restore Environment
       shell: bash
