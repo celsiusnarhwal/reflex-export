@@ -38,14 +38,10 @@ jobs:
         if: ${{ matrix.pm == 'uv' }}
         run: uv init && uv add reflex
 
-      - name: Install Reflex (PDM)
-        if: ${{ matrix.pm == 'pdm' }}
-        run: pdm init -n --python ${{ matrix.python }} && pdm add reflex
-
-      - name: Install Reflex (Poetry)
-        if: ${{ matrix.pm == 'poetry' }}
+      - name: Install Reflex (PDM/Poetry)
+        if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
         shell: bash
-        run: poetry init -n --python ^${{ matrix.python }} && poetry add reflex               
+        run: ${{ matrix.pm }} init -n --python $(python --version | cut -d ' ' -f 2) add reflex
         env:
           POETRY_VIRTUALENVS_IN_PROJECT: true
              
