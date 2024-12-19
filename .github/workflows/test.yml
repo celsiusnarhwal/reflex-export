@@ -47,19 +47,13 @@ jobs:
         if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
         shell: bash
         run: ${{ matrix.pm }} init -n && ${{ matrix.pm }} add reflex
-
-      - if: ${{ matrix.pm == 'poetry' }}
-        shell: bash
-        id: interpreter
-        run: echo "interpreter=$(poetry env info --executable)" >> ${GITHUB_OUTPUT}
+        env:
+          POETRY_VIRTUALENVS_IN_PROJECT: true
 
       - name: Initialize Reflex Project
         run: uv run --no-project reflex init --template blank
-        env:
-          UV_PYTHON: ${{ steps.interpreter.outputs.interpreter }}
 
       - name: Export Reflex Project
         uses: celsiusnarhwal/reflex-export@main
         with:
           args: --loglevel debug
-          interpreter: ${{ steps.interpreter.outputs.interpreter }}
