@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: ["ubuntu", "macos"]
         python: ["3.10", "3.11", "3.12", "3.13"]
-        pm: ["pip", "uv", "poetry", "pdm", "hatch"]
+        pm: ["pip", "uv", "poetry", "pdm", "pipenv"]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Set Up Python
@@ -38,9 +38,9 @@ jobs:
         if: ${{ matrix.pm == 'uv' }}
         run: uv init && uv add reflex
 
-      - name: Install Reflex (Hatch)
-        if: ${{ matrix.pm == 'hatch' }}
-        run: yes | hatch new --init && hatch add reflex
+      - name: Install Reflex (pipenv)
+        if: ${{ matrix.pm == 'pipenv' }}
+        run: pipenv install reflex
 
       - name: Install Reflex (PDM/Poetry)
         if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
