@@ -26,7 +26,7 @@ This action does not currently support Windows runners.
   # Install Reflex and other dependencies using the tool of your choice, then...
 
 - name: Export Project
-  uses: celsiusnarhwal/reflex-export@v1
+  uses: celsiusnarhwal/reflex-export@v2
 ```
 
 
