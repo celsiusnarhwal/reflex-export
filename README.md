@@ -32,8 +32,10 @@ This action does not currently support Windows runners.
 
 ### Inputs
 
+All input are optional.
+
 | **Name**       | **Description**                                                                                                                                                                      |
 |----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `args`         | Optional arguments to `reflex export`.                                                                                                                                               |
+| `args`         | Arguments to `reflex export`.                                                                                                                                                        |
 | `project-root` | A relative or absolute path to the root of your Reflex project. Required if your project is not located in the current working directory. Defaults to the current working directory. |
 | `interpreter`   | A path to the Python interpreter the action should use. May be absolute or relative to `project-root`.                                                                               |
