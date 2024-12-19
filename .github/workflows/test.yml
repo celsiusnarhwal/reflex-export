@@ -51,7 +51,7 @@ jobs:
       - if: ${{ matrix.pm == 'poetry' }}
         shell: bash
         id: interpreter
-        run: echo "interpeter=$(poetry env info --executable)" >> ${GITHUB_OUTPUT}
+        run: echo "interpreter=$(poetry env info --executable)" >> ${GITHUB_OUTPUT}
 
       - name: Initialize Reflex Project
         run: uv run --no-project reflex init --template blank
