@@ -55,6 +55,8 @@ jobs:
 
       - name: Initialize Reflex Project
         run: uv run --no-project reflex init --template blank
+        env:
+          UV_PYTHON: ${{ steps.interpreter.outputs.interpreter }}
 
       - name: Export Reflex Project
         uses: celsiusnarhwal/reflex-export@main
