@@ -44,12 +44,14 @@ jobs:
         env:
           PIPENV_VENV_IN_PROJECT: true
 
+      - if: ${{ matrix.pm == 'poetry' }}
+        shell: bash
+        run: echo "UV_PROJECT_ENVIRONMENT=$(poetry env info --path)" >> ${GITHUB_ENV}
+
       - name: Install Reflex (PDM/Poetry)
         if: ${{ matrix.pm == 'poetry' || matrix.pm == 'pdm' }}
         shell: bash
         run: ${{ matrix.pm }} init -n && ${{ matrix.pm }} add reflex
-        env:
-          POETRY_VIRTUALENVS_IN_PROJECT: true
              
       - name: Initialize Reflex Project
         run: uv run --no-project reflex init --template blank
