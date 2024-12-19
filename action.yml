@@ -40,6 +40,7 @@ runs:
 
     - name: Set Python Interpreter
       if: ${{ inputs.interpreter }}
+      shell: bash
       run: echo "UV_PYTHON=${{ inputs.interpreter }}" >> ${GITHUB_ENV}
 
     - name: Set Up uv
