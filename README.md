@@ -32,7 +32,7 @@ This action does not currently support Windows runners.
 
 ### Inputs
 
-All input are optional.
+All inputs are optional.
 
 | **Name**       | **Description**                                                                                                                                                                      |
 |----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
