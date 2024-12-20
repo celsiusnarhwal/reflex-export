@@ -41,7 +41,8 @@ runs:
     - name: Set Python Interpreter
       if: ${{ inputs.interpreter }}
       shell: bash
-      run: echo "UV_PYTHON=${{ inputs.interpreter }}" >> ${GITHUB_ENV}
+      run: echo "UV_PYTHON=$(realpath ${{ inputs.interpreter }})" >> ${GITHUB_ENV}
+      working-directory: ${{ env.REFLEX_EXPORT_CWD }}
 
     - name: Set Up uv
       uses: astral-sh/setup-uv@v4
